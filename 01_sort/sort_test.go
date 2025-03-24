@@ -22,11 +22,18 @@ func TestQuickSort(t *testing.T) {
 	for _, tt := range tests {
 		// 拷贝输入，避免修改原始切片
 		inputCopy := make([]int, len(tt.input))
-		copy(inputCopy, tt.input)
 
+		// 快排测试
+		copy(inputCopy, tt.input)
 		QuickSort(inputCopy)
 		if !reflect.DeepEqual(inputCopy, tt.expected) {
 			t.Errorf("QuickSort(%v) = %v; want %v", tt.input, inputCopy, tt.expected)
+		}
+		// 冒泡测试
+		copy(inputCopy, tt.input)
+		BubbleSort(inputCopy)
+		if !reflect.DeepEqual(inputCopy, tt.expected) {
+			t.Errorf("Bubble(%v) = %v; want %v", tt.input, inputCopy, tt.expected)
 		}
 	}
 }
