@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestQuickSort(t *testing.T) {
+func TestSort(t *testing.T) {
 	tests := []struct {
 		input    []int
 		expected []int
