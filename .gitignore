@@ -38,19 +38,6 @@ test_out
 *.out
 *.app
 
-# Folders
-build*
-#thirdparty
-!thirdparty_source
-release
-Release
-debug
-Debug
-bin
-lib
-build
-vegas/res/data
-
 # MacOS finder files
 *.DS_Store
 
