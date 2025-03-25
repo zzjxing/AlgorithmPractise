@@ -10,7 +10,7 @@ package search
 //		3. 丢弃 nums1的钱k/2个数，重新调整 k 值，进行循环，直到 nums1 或者 nums2长度为 0，或者 k 值为 1
 func FindMedianSortArrays(nums1, nums2 []int) float64 {
 	l1, l2 := len(nums1), len(nums2) // 3 4
-	mid := (l1 + l2) / 2.            // 3
+	mid := (l1 + l2) / 2             // 3
 	if (l1+l2)%2 == 1 {
 		return float64(findK(nums1, nums2, mid+1))
 	}
@@ -27,7 +27,7 @@ func findK(nums1, nums2 []int, k int) int {
 			return nums1[k-1]
 		}
 		if k == 1 {
-			return max(nums1[0], nums2[0])
+			return min(nums1[0], nums2[0])
 		}
 		m1 := min(len(nums1), k/2) - 1
 		m2 := min(len(nums2), k/2) - 1
