@@ -29,11 +29,12 @@ func ReverseBetween(head *common.ListNode, left, right int) *common.ListNode {
 		prev = prev.Next
 	}
 	curr := prev.Next
+	// 每次循环将curr插入到 prev 之后，然后 curr 后移
 	for i := left; i < right; i++ {
 		next := curr.Next
-		curr.Next = prev
-		prev = curr
-		curr = next
+		curr.Next = next.Next
+		next.Next = prev.Next
+		prev.Next = next
 	}
 	return dummy.Next
 }
