@@ -80,3 +80,25 @@ func TestGetIntersectionNode(t *testing.T) {
 		t.Errorf("GetIntersectionNode failed: got %v, want %v", got, commonPart)
 	}
 }
+
+func TestReorderList(t *testing.T) {
+	tests := []struct {
+		input    []int
+		expected []int
+	}{
+		{[]int{1, 2, 3, 4}, []int{1, 4, 2, 3}},
+		{[]int{1, 2, 3, 4, 5}, []int{1, 5, 2, 4, 3}},
+		{[]int{1}, []int{1}},
+		{[]int{1, 2}, []int{1, 2}},
+	}
+
+	for _, tt := range tests {
+		head := common.BuildList(tt.input)
+		ReorderList(head)
+		want := common.BuildList(tt.expected)
+
+		if !common.EqualList(head, want) {
+			t.Errorf("ReorderList(%v) failed: got %v, want %v", tt.input, common.ListToSlice(head), tt.expected)
+		}
+	}
+}

@@ -45,7 +45,7 @@ func ReverseBetween(head *common.ListNode, left, right int) *common.ListNode {
 //	先从 head 反转 k 个节点，然后再以第 k+1 个节点为 head，反转 k 个节点
 //	如此循环，直到最后的节点数量小于k
 func ReverseKGroup(head *common.ListNode, k int) *common.ListNode {
-	count := common.Length(head)
+	count := common.LenOfList(head)
 	if count < k { // 递归终止
 		return head
 	}
