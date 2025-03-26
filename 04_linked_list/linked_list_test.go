@@ -225,3 +225,60 @@ func TestDeleteDuplicates2(t *testing.T) {
 		}
 	}
 }
+
+// 测试链表排序
+func TestSortList(t *testing.T) {
+	input := common.BuildList([]int{4, 2, 1, 3})
+	got := SortList(input)
+	want := common.BuildList([]int{1, 2, 3, 4})
+
+	if !common.EqualList(got, want) {
+		t.Errorf("SortList failed: got %v, want %v", common.ListToSlice(got), common.ListToSlice(want))
+	}
+}
+
+// 测试链表加法
+func TestAddTwoNumbers(t *testing.T) {
+	tests := []struct {
+		l1, l2   []int
+		expected []int
+	}{
+		{[]int{2, 4, 3}, []int{5, 6, 4}, []int{7, 0, 8}}, // 342 + 465 = 807
+		{[]int{0}, []int{0}, []int{0}},                   // 0 + 0 = 0
+		{[]int{9, 9, 9}, []int{1}, []int{0, 0, 0, 1}},    // 999 + 1 = 1000
+	}
+
+	for _, tt := range tests {
+		l1 := common.BuildList(tt.l1)
+		l2 := common.BuildList(tt.l2)
+		got := AddTwoNumbers(l1, l2)
+		want := common.BuildList(tt.expected)
+
+		if !common.EqualList(got, want) {
+			t.Errorf("AddTwoNumbers(%v, %v) = %v, want %v",
+				tt.l1, tt.l2, common.ListToSlice(got), tt.expected)
+		}
+	}
+}
+
+// 测试链表是否为回文
+func TestIsPalindrome(t *testing.T) {
+	tests := []struct {
+		input    []int
+		expected bool
+	}{
+		{[]int{1, 2, 2, 1}, true},
+		{[]int{1, 2}, false},
+		{[]int{1, 2, 1}, true},
+		{[]int{1}, true},
+		{[]int{}, true},
+	}
+
+	for _, tt := range tests {
+		head := common.BuildList(tt.input)
+		got := IsPalindrome(head)
+		if got != tt.expected {
+			t.Errorf("IsPalindrome(%v) = %v, want %v", tt.input, got, tt.expected)
+		}
+	}
+}
