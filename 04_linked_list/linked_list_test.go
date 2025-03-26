@@ -102,3 +102,126 @@ func TestReorderList(t *testing.T) {
 		}
 	}
 }
+
+func TestMergeTwoOrderedLists(t *testing.T) {
+	tests := []struct {
+		a, b     []int
+		expected []int
+	}{
+		{[]int{1, 3, 5}, []int{2, 4, 6}, []int{1, 2, 3, 4, 5, 6}},
+		{[]int{1, 2}, []int{}, []int{1, 2}},
+		{[]int{}, []int{3, 4}, []int{3, 4}},
+		{[]int{}, []int{}, []int{}},
+	}
+
+	for _, tt := range tests {
+		l1 := common.BuildList(tt.a)
+		l2 := common.BuildList(tt.b)
+		got := MergeTwoOrderedLists(l1, l2)
+		want := common.BuildList(tt.expected)
+		if !common.EqualList(got, want) {
+			t.Errorf("MergeTwoOrderedLists(%v, %v) got %v, want %v", tt.a, tt.b, common.ListToSlice(got), tt.expected)
+		}
+	}
+}
+
+func TestMergeKLists(t *testing.T) {
+	tests := []struct {
+		input    [][]int
+		expected []int
+	}{
+		{
+			input:    [][]int{{1, 4, 5}, {1, 3, 4}, {2, 6}},
+			expected: []int{1, 1, 2, 3, 4, 4, 5, 6},
+		},
+		{
+			input:    [][]int{},
+			expected: []int{},
+		},
+		{
+			input:    [][]int{{}},
+			expected: []int{},
+		},
+	}
+
+	for _, tt := range tests {
+		var listNodes []*common.ListNode
+		for _, arr := range tt.input {
+			listNodes = append(listNodes, common.BuildList(arr))
+		}
+		got := MergeKLists(listNodes)
+		want := common.BuildList(tt.expected)
+		if !common.EqualList(got, want) {
+			t.Errorf("MergeKLists(%v) got %v, want %v", tt.input, common.ListToSlice(got), tt.expected)
+		}
+	}
+}
+
+func TestRemoveKthFromEnd(t *testing.T) {
+	tests := []struct {
+		input    []int
+		k        int
+		expected []int
+	}{
+		{[]int{1, 2, 3, 4, 5}, 2, []int{1, 2, 3, 5}}, // 删除 4
+		{[]int{1}, 1, []int{}},                       // 删除 1
+		{[]int{1, 2}, 1, []int{1}},                   // 删除 2
+		{[]int{1, 2}, 2, []int{2}},                   // 删除 1
+		{[]int{1, 2, 3}, 3, []int{2, 3}},             // 删除头部
+	}
+
+	for _, tt := range tests {
+		head := common.BuildList(tt.input)
+		got := RemoveKthFromEnd(head, tt.k)
+		want := common.BuildList(tt.expected)
+
+		if !common.EqualList(got, want) {
+			t.Errorf("RemoveKthFromEnd(%v, %d) = %v, want %v", tt.input, tt.k, common.ListToSlice(got), tt.expected)
+		}
+	}
+}
+
+func TestDeleteDuplicates(t *testing.T) {
+	tests := []struct {
+		input    []int
+		expected []int
+	}{
+		{[]int{1, 2, 2, 3, 3, 4, 5}, []int{1, 2, 3, 4, 5}},
+		{[]int{1, 1, 1, 1}, []int{1}},
+		{[]int{1, 2, 3}, []int{1, 2, 3}},
+		{[]int{}, []int{}},
+	}
+
+	for _, tt := range tests {
+		head := common.BuildList(tt.input)
+		got := DeleteDuplicates(head)
+		want := common.BuildList(tt.expected)
+
+		if !common.EqualList(got, want) {
+			t.Errorf("DeleteDuplicates(%v) = %v, want %v", tt.input, common.ListToSlice(got), tt.expected)
+		}
+	}
+}
+
+func TestDeleteDuplicates2(t *testing.T) {
+	tests := []struct {
+		input    []int
+		expected []int
+	}{
+		{[]int{1, 2, 2, 3, 3, 4, 5}, []int{1, 4, 5}},
+		{[]int{1, 1, 2, 3, 3}, []int{2}},
+		{[]int{1, 1, 1, 1}, []int{}},
+		{[]int{1, 2, 3}, []int{1, 2, 3}},
+		{[]int{}, []int{}},
+	}
+
+	for _, tt := range tests {
+		head := common.BuildList(tt.input)
+		got := DeleteDuplicates2(head)
+		want := common.BuildList(tt.expected)
+
+		if !common.EqualList(got, want) {
+			t.Errorf("DeleteDuplicates2(%v) = %v, want %v", tt.input, common.ListToSlice(got), tt.expected)
+		}
+	}
+}
