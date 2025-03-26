@@ -39,6 +39,46 @@ func TestSearchInRotatedArray(t *testing.T) {
 	}
 }
 
+func TestFindKLargest(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		k        int
+		expected int
+	}{
+		{[]int{3, 2, 1, 5, 6, 4}, 2, 5},
+		{[]int{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4, 4},
+		{[]int{1}, 1, 1},
+		{[]int{7, 10, 4, 3, 20, 15}, 3, 10},
+	}
+
+	for _, tt := range tests {
+		got := FindKLargest(tt.nums, tt.k)
+		if got != tt.expected {
+			t.Errorf("FindKLargest(%v, %d) = %d; want %d", tt.nums, tt.k, got, tt.expected)
+		}
+	}
+}
+
+func TestFindKthSmallest(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		k        int
+		expected int
+	}{
+		{[]int{3, 2, 1, 5, 6, 4}, 2, 2},
+		{[]int{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4, 3},
+		{[]int{1}, 1, 1},
+		{[]int{7, 10, 4, 3, 20, 15}, 3, 7},
+	}
+
+	for _, tt := range tests {
+		got := FindKthSmallest(tt.nums, tt.k)
+		if got != tt.expected {
+			t.Errorf("FindKthSmallest(%v, %d) = %d; want %d", tt.nums, tt.k, got, tt.expected)
+		}
+	}
+}
+
 func TestFindMedianSortArrays(t *testing.T) {
 	tests := []struct {
 		nums1, nums2 []int
