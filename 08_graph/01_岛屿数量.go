@@ -1,6 +1,6 @@
 package graph
 
-func numIslands(grid [][]byte) int {
+func NumIslands(grid [][]byte) int {
 	ret := 0
 	directions := [][]int{{0, 1}, {0, -1}, {-1, 0}, {1, 0}}
 	var bfs func(i, j int)
