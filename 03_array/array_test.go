@@ -221,6 +221,28 @@ func TestSubSets(t *testing.T) {
 	}
 }
 
+func TestNextPermutation(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		expected []int
+	}{
+		{[]int{1, 2, 3}, []int{1, 3, 2}},
+		{[]int{3, 2, 1}, []int{1, 2, 3}}, // 最大排列，回归最小
+		{[]int{1, 1, 5}, []int{1, 5, 1}},
+		{[]int{1, 3, 2}, []int{2, 1, 3}},
+		{[]int{2, 3, 1}, []int{3, 1, 2}},
+		{[]int{5, 4, 7, 5, 3, 2}, []int{5, 5, 2, 3, 4, 7}},
+	}
+
+	for _, tt := range tests {
+		numsCopy := append([]int{}, tt.nums...) // 复制数组，防止修改原测试数据
+		NextPermutation(numsCopy)
+		if !reflect.DeepEqual(numsCopy, tt.expected) {
+			t.Errorf("NextPermutation(%v) = %v, want %v", tt.nums, numsCopy, tt.expected)
+		}
+	}
+}
+
 func TestLongestConsecutive(t *testing.T) {
 	tests := []struct {
 		nums     []int
