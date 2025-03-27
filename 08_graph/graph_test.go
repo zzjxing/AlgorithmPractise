@@ -124,3 +124,70 @@ func TestRotateImage(t *testing.T) {
 		}
 	}
 }
+
+func TestMaxSquare(t *testing.T) {
+	tests := []struct {
+		matrix   [][]byte
+		expected int
+	}{
+		// 标准测试用例
+		{
+			matrix: [][]byte{
+				{'1', '0', '1', '0', '0'},
+				{'1', '0', '1', '1', '1'},
+				{'1', '1', '1', '1', '1'},
+				{'1', '0', '0', '1', '0'},
+			},
+			expected: 4, // 最大正方形面积为 2×2 = 4
+		},
+		{
+			matrix: [][]byte{
+				{'0', '1'},
+				{'1', '0'},
+			},
+			expected: 1, // 只有单个 '1'，面积 1×1 = 1
+		},
+		{
+			matrix: [][]byte{
+				{'1', '1'},
+				{'1', '1'},
+			},
+			expected: 4, // 2×2 全部是 '1'
+		},
+		// 只有一行
+		{
+			matrix:   [][]byte{{'1', '0', '1', '1'}},
+			expected: 1, // 只能形成 1×1
+		},
+		// 只有一列
+		{
+			matrix: [][]byte{
+				{'1'},
+				{'0'},
+				{'1'},
+			},
+			expected: 1, // 只能形成 1×1
+		},
+		// 只有一个元素
+		{
+			matrix:   [][]byte{{'1'}},
+			expected: 1,
+		},
+		{
+			matrix:   [][]byte{{'0'}},
+			expected: 0,
+		},
+		// 空矩阵
+		{
+			matrix:   [][]byte{},
+			expected: 0,
+		},
+	}
+
+	for _, tt := range tests {
+		got := MaxSquare(tt.matrix)
+		if got != tt.expected {
+			t.Errorf("MaxSquare(%v) = %d, want %d", tt.matrix, got, tt.expected)
+		}
+	}
+}
