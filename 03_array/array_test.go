@@ -146,6 +146,29 @@ func TestMergeInterval(t *testing.T) {
 	}
 }
 
+func TestTrap(t *testing.T) {
+	tests := []struct {
+		height   []int
+		expected int
+	}{
+		{[]int{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}, 6}, // 标准用例
+		{[]int{4, 2, 0, 3, 2, 5}, 9},                   // 多层积水
+		{[]int{1, 2, 3, 4, 5}, 0},                      // 递增，无法积水
+		{[]int{5, 4, 3, 2, 1}, 0},                      // 递减，无法积水
+		{[]int{5}, 0},                                  // 只有一个柱子
+		{[]int{1, 2, 1}, 0},                            // 只有两个柱子
+		{[]int{2, 0, 2}, 2},                            // 形成一个小池子
+		{[]int{}, 0},                                   // 空数组
+	}
+
+	for _, tt := range tests {
+		got := Trap(tt.height)
+		if got != tt.expected {
+			t.Errorf("Trap(%v) = %d, want %d", tt.height, got, tt.expected)
+		}
+	}
+}
+
 func TestLongestConsecutive(t *testing.T) {
 	tests := []struct {
 		nums     []int
