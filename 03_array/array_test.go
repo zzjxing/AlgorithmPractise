@@ -243,6 +243,37 @@ func TestNextPermutation(t *testing.T) {
 	}
 }
 
+func TestMaxSlidingWindow(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		k        int
+		expected []int
+	}{
+		// 标准用例
+		{[]int{1, 3, -1, -3, 5, 3, 6, 7}, 3, []int{3, 3, 5, 5, 6, 7}},
+		{[]int{1, 2, 3, 4, 5, 6, 7, 8, 9}, 3, []int{3, 4, 5, 6, 7, 8, 9}},
+		{[]int{9, 8, 7, 6, 5, 4, 3, 2, 1}, 3, []int{9, 8, 7, 6, 5, 4, 3}},
+		{[]int{1, 3, 1, 2, 0, 5}, 3, []int{3, 3, 2, 5}},
+		// 窗口大小等于数组长度
+		{[]int{1, 2, 3, 4}, 4, []int{4}},
+		// k=1，每个元素都是最大值
+		{[]int{1, 2, 3, 4, 5}, 1, []int{1, 2, 3, 4, 5}},
+		// 只有一个元素
+		{[]int{5}, 1, []int{5}},
+		// 空数组
+		{[]int{}, 3, nil},
+		// k 大于数组长度（无效输入）
+		{[]int{1, 2}, 3, nil},
+	}
+
+	for _, tt := range tests {
+		got := MaxSlidingWindow(tt.nums, tt.k)
+		if !reflect.DeepEqual(got, tt.expected) {
+			t.Errorf("MaxSlidingWindow(%v, %d) = %v, want %v", tt.nums, tt.k, got, tt.expected)
+		}
+	}
+}
+
 func TestLongestConsecutive(t *testing.T) {
 	tests := []struct {
 		nums     []int
