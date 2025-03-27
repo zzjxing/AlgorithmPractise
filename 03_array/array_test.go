@@ -120,3 +120,28 @@ func TestLengthOfLIS(t *testing.T) {
 		}
 	}
 }
+
+func TestMergeInterval(t *testing.T) {
+	tests := []struct {
+		input    [][]int
+		expected [][]int
+	}{
+		// 标准用例
+		{[][]int{{1, 3}, {2, 6}, {8, 10}, {15, 18}}, [][]int{{1, 6}, {8, 10}, {15, 18}}},
+		// 完全重叠
+		{[][]int{{1, 4}, {2, 3}}, [][]int{{1, 4}}},
+		// 没有重叠
+		{[][]int{{1, 2}, {3, 4}, {5, 6}}, [][]int{{1, 2}, {3, 4}, {5, 6}}},
+		// 只有一个区间
+		{[][]int{{1, 5}}, [][]int{{1, 5}}},
+		// 空输入
+		{[][]int{}, nil},
+	}
+
+	for _, tt := range tests {
+		got := MergeInterval(tt.input)
+		if !reflect.DeepEqual(got, tt.expected) {
+			t.Errorf("MergeInterval(%v) = %v, want %v", tt.input, got, tt.expected)
+		}
+	}
+}
