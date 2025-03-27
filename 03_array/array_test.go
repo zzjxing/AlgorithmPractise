@@ -1,6 +1,7 @@
 package array
 
 import (
+	"math"
 	"reflect"
 	"sort"
 	"testing"
@@ -296,6 +297,36 @@ func TestCoinChange(t *testing.T) {
 		got := CoinChange(tt.coins, tt.target)
 		if got != tt.expected {
 			t.Errorf("CoinChange(%v, %d) = %d, want %d", tt.coins, tt.target, got, tt.expected)
+		}
+	}
+}
+
+func TestFirstMissingPositive(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		expected int
+	}{
+		{[]int{1, 2, 0}, 3},
+		{[]int{3, 4, -1, 1}, 2},
+		{[]int{7, 8, 9, 11, 12}, 1},
+		{[]int{1}, 2},
+		{[]int{2, 1}, 3},
+		{[]int{}, 1},
+		{[]int{0, 0, 1, 1, 2, 2, 3, 3}, 4},
+		{[]int{math.MaxInt, 1, 2, 3}, 4},
+	}
+
+	for _, tt := range tests {
+		numsCopy := append([]int{}, tt.nums...) // 复制数组
+		got := FirstMissingPositive(numsCopy)
+		if got != tt.expected {
+			t.Errorf("FirstMissingPositive(%v) = %d, want %d", tt.nums, got, tt.expected)
+		}
+
+		numsCopy2 := append([]int{}, tt.nums...)
+		got2 := FirstMissingPositive2(numsCopy2)
+		if got2 != tt.expected {
+			t.Errorf("FirstMissingPositive2(%v) = %d, want %d", tt.nums, got2, tt.expected)
 		}
 	}
 }
