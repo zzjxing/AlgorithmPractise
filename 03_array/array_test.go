@@ -99,3 +99,24 @@ func TestSpiralOrder(t *testing.T) {
 		t.Errorf("SpiralOrder failed: got %v, want %v", got, want)
 	}
 }
+
+func TestLengthOfLIS(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		expected int
+	}{
+		{[]int{10, 9, 2, 5, 3, 7, 101, 18}, 4}, // 最长递增子序列: [2,3,7,101]
+		{[]int{0, 1, 0, 3, 2, 3}, 4},           // 最长递增子序列: [0,1,2,3]
+		{[]int{7, 7, 7, 7, 7, 7, 7}, 1},        // 所有元素相同，只能取 1
+		{[]int{1, 3, 5, 4, 7}, 4},              // 最长递增子序列: [1,3,5,7]
+		{[]int{1}, 1},                          // 只有一个元素
+		{[]int{}, 0},                           // 空数组
+	}
+
+	for _, tt := range tests {
+		got := LengthOfLIS(tt.nums)
+		if got != tt.expected {
+			t.Errorf("LengthOfLIS(%v) = %d, want %d", tt.nums, got, tt.expected)
+		}
+	}
+}
