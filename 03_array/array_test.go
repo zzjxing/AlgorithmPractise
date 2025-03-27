@@ -274,6 +274,32 @@ func TestMaxSlidingWindow(t *testing.T) {
 	}
 }
 
+func TestCoinChange(t *testing.T) {
+	tests := []struct {
+		coins    []int
+		target   int
+		expected int
+	}{
+		// 标准用例
+		{[]int{1, 2, 5}, 11, 3},              // 5+5+1=11
+		{[]int{2}, 3, -1},                    // 目标 3，只有 2，无解
+		{[]int{1}, 0, 0},                     // 目标 0，直接返回 0
+		{[]int{1}, 2, 2},                     // 目标 2，只有 1，2 个 1
+		{[]int{186, 419, 83, 408}, 6249, 20}, // 复杂大数测试
+		// 目标不可达情况
+		{[]int{3, 7}, 5, -1}, // 只能选 3 或 7，无法拼出 5
+		// 目标刚好可达
+		{[]int{2, 5, 10, 1}, 27, 4}, // 10+10+5+2=27
+	}
+
+	for _, tt := range tests {
+		got := CoinChange(tt.coins, tt.target)
+		if got != tt.expected {
+			t.Errorf("CoinChange(%v, %d) = %d, want %d", tt.coins, tt.target, got, tt.expected)
+		}
+	}
+}
+
 func TestLongestConsecutive(t *testing.T) {
 	tests := []struct {
 		nums     []int
