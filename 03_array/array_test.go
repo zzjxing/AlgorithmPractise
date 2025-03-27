@@ -169,6 +169,58 @@ func TestTrap(t *testing.T) {
 	}
 }
 
+// sortSlices 对子集进行排序，使结果一致
+func sortSlices(slices [][]int) {
+	for _, s := range slices {
+		sort.Ints(s) // 先对每个子集内部排序
+	}
+	sort.Slice(slices, func(i, j int) bool {
+		// 然后对整个结果排序
+		if len(slices[i]) != len(slices[j]) {
+			return len(slices[i]) < len(slices[j])
+		}
+		for k := range slices[i] {
+			if slices[i][k] != slices[j][k] {
+				return slices[i][k] < slices[j][k]
+			}
+		}
+		return false
+	})
+}
+
+func TestSubSets(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		expected [][]int
+	}{
+		// 标准用例
+		{[]int{1, 2, 3}, [][]int{
+			{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3},
+		}},
+		// 只有一个元素
+		{[]int{1}, [][]int{
+			{}, {1},
+		}},
+		// 空数组
+		{[]int{}, [][]int{
+			{},
+		}},
+		// 包含重复数字（通常假设唯一，这里测试行为）
+		{[]int{1, 2, 2}, [][]int{
+			{}, {1}, {2}, {2}, {1, 2}, {1, 2}, {2, 2}, {1, 2, 2},
+		}},
+	}
+
+	for _, tt := range tests {
+		got := SubSets(tt.nums)
+		sortSlices(got)         // 排序实际输出
+		sortSlices(tt.expected) // 排序预期输出
+		if !reflect.DeepEqual(got, tt.expected) {
+			t.Errorf("SubSets(%v) = %v, want %v", tt.nums, got, tt.expected)
+		}
+	}
+}
+
 func TestLongestConsecutive(t *testing.T) {
 	tests := []struct {
 		nums     []int
