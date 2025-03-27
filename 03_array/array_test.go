@@ -331,6 +331,147 @@ func TestFirstMissingPositive(t *testing.T) {
 	}
 }
 
+func TestCombinationSum(t *testing.T) {
+	tests := []struct {
+		nums     []int
+		target   int
+		expected [][]int
+	}{
+		// 标准用例
+		{[]int{2, 3, 6, 7}, 7, [][]int{
+			{2, 2, 3}, {7},
+		}},
+		{[]int{2, 3, 5}, 8, [][]int{
+			{2, 2, 2, 2}, {2, 3, 3}, {3, 5},
+		}},
+		// 只有一个元素
+		{[]int{7}, 7, [][]int{
+			{7},
+		}},
+		// 无解情况
+		{[]int{2, 4}, 7, nil},
+		// 目标为 0，返回空集合
+		{[]int{3, 5, 7}, 0, [][]int{{}}},
+		// 空数组
+		{[]int{}, 7, nil},
+	}
+
+	for _, tt := range tests {
+		got := CombinationSum(tt.nums, tt.target)
+		sortSlices(got)
+		sortSlices(tt.expected)
+		if !reflect.DeepEqual(got, tt.expected) {
+			t.Errorf("CombinationSum(%v, %d) = %v, want %v", tt.nums, tt.target, got, tt.expected)
+		}
+	}
+}
+
+func TestSearMatrix(t *testing.T) {
+	tests := []struct {
+		matrix   [][]int
+		target   int
+		expected bool
+	}{
+		// 标准测试用例
+		{
+			matrix: [][]int{
+				{1, 4, 7, 11, 15},
+				{2, 5, 8, 12, 19},
+				{3, 6, 9, 16, 22},
+				{10, 13, 14, 17, 24},
+				{18, 21, 23, 26, 30},
+			},
+			target:   5,
+			expected: true,
+		},
+		{
+			matrix: [][]int{
+				{1, 4, 7, 11, 15},
+				{2, 5, 8, 12, 19},
+				{3, 6, 9, 16, 22},
+				{10, 13, 14, 17, 24},
+				{18, 21, 23, 26, 30},
+			},
+			target:   20,
+			expected: false,
+		},
+		// 只有一行
+		{[][]int{{1, 3, 5, 7}}, 3, true},
+		{[][]int{{1, 3, 5, 7}}, 6, false},
+		// 只有一列
+		{[][]int{{1}, {3}, {5}, {7}}, 5, true},
+		{[][]int{{1}, {3}, {5}, {7}}, 4, false},
+		// 空矩阵
+		{[][]int{}, 1, false},
+		{[][]int{{}}, 1, false},
+		// 只有一个元素
+		{[][]int{{10}}, 10, true},
+		{[][]int{{10}}, 5, false},
+	}
+
+	for _, tt := range tests {
+		got := SearMatrix(tt.matrix, tt.target)
+		if got != tt.expected {
+			t.Errorf("SearMatrix(%v, %d) = %v, want %v", tt.matrix, tt.target, got, tt.expected)
+		}
+	}
+}
+func TestMinPathSum(t *testing.T) {
+	tests := []struct {
+		grid     [][]int
+		expected int
+	}{
+		// 标准测试用例
+		{
+			grid: [][]int{
+				{1, 3, 1},
+				{1, 5, 1},
+				{4, 2, 1},
+			},
+			expected: 7, // 1→3→1→1→1
+		},
+		{
+			grid: [][]int{
+				{1, 2, 3},
+				{4, 5, 6},
+			},
+			expected: 12, // 1→2→3→6
+		},
+		// 只有一行
+		{
+			grid:     [][]int{{1, 2, 3, 4}},
+			expected: 10, // 1→2→3→4
+		},
+		// 只有一列
+		{
+			grid: [][]int{
+				{1},
+				{2},
+				{3},
+				{4},
+			},
+			expected: 10, // 1→2→3→4
+		},
+		// 只有一个元素
+		{
+			grid:     [][]int{{5}},
+			expected: 5,
+		},
+		// 空输入
+		{
+			grid:     [][]int{},
+			expected: 0,
+		},
+	}
+
+	for _, tt := range tests {
+		got := MinPathSum(tt.grid)
+		if got != tt.expected {
+			t.Errorf("MinPathSum(%v) = %d, want %d", tt.grid, got, tt.expected)
+		}
+	}
+}
+
 func TestLongestConsecutive(t *testing.T) {
 	tests := []struct {
 		nums     []int
