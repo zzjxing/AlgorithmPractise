@@ -115,3 +115,41 @@ func TestLowestCommonAncestor(t *testing.T) {
 		}
 	}
 }
+
+func TestMaxPathSum(t *testing.T) {
+	tests := []struct {
+		data     []int
+		expected int
+	}{
+		//        1
+		//       / \
+		//      2   3
+		// 最大路径：2 -> 1 -> 3，和为 6
+		{[]int{1, 2, 3}, 6},
+
+		//         -10
+		//         /  \
+		//        9   20
+		//            / \
+		//           15  7
+		// 最大路径：15 -> 20 -> 7，和为 42
+		{[]int{-10, 9, 20, -1, -1, 15, 7}, 42},
+
+		// 只有一个节点
+		{[]int{-3}, -3},
+
+		//       2
+		//      / \
+		//     -1  3
+		// 最大路径：3 -> 2，和为 5
+		{[]int{2, -1, 3}, 5},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		res := MaxPathSum(root)
+		if res != tt.expected {
+			t.Errorf("MaxPathSum(%v) = %d; want %d", tt.data, res, tt.expected)
+		}
+	}
+}
