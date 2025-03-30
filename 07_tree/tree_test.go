@@ -66,3 +66,52 @@ func TestRightView(t *testing.T) {
 		t.Errorf("RightView failed, expected %v, got %v", expected, res)
 	}
 }
+
+func findNodeByVal(root *common.TreeNode, val int) *common.TreeNode {
+	if root == nil {
+		return nil
+	}
+	if root.Val == val {
+		return root
+	}
+	if left := findNodeByVal(root.Left, val); left != nil {
+		return left
+	}
+	return findNodeByVal(root.Right, val)
+}
+
+func TestLowestCommonAncestor(t *testing.T) {
+	// 构建树：层序数组构建
+	// 树结构与之前例子一致
+	//        3
+	//       / \
+	//      5   1
+	//     / \ / \
+	//    6  2 0  8
+	//      / \
+	//     7   4
+	data := []int{3, 5, 1, 6, 2, 0, 8, -1, -1, 7, 4}
+	root := common.BuildTree(data)
+
+	tests := []struct {
+		p, q     int
+		expected int
+	}{
+		{5, 1, 3},
+		{6, 4, 5},
+		{7, 8, 3},
+		{0, 8, 1},
+		{7, 4, 2},
+	}
+
+	for _, tt := range tests {
+		p := findNodeByVal(root, tt.p)
+		q := findNodeByVal(root, tt.q)
+		want := tt.expected
+
+		got := LowestCommonAncestor(root, p, q)
+		if got == nil || got.Val != want {
+			t.Errorf("LCA(%d, %d) = %v; want %d", tt.p, tt.q, got, want)
+		}
+	}
+}
