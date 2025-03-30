@@ -153,3 +153,31 @@ func TestMaxPathSum(t *testing.T) {
 		}
 	}
 }
+
+func TestBuildTreeFromInPreOrder(t *testing.T) {
+	tests := []struct {
+		preOrder []int
+		inOrder  []int
+	}{
+		{
+			preOrder: []int{3, 9, 20, 15, 7},
+			inOrder:  []int{9, 3, 15, 20, 7},
+		},
+		{
+			preOrder: []int{1, 2, 4, 5, 3},
+			inOrder:  []int{4, 2, 5, 1, 3},
+		},
+		{
+			preOrder: []int{1},
+			inOrder:  []int{1},
+		},
+	}
+
+	for _, tt := range tests {
+		root := BuildTreeFromInPreOrder(tt.preOrder, tt.inOrder)
+		got := Inorder(root)
+		if !reflect.DeepEqual(got, tt.inOrder) {
+			t.Errorf("Inorder(tree built from %v + %v) = %v; want %v", tt.preOrder, tt.inOrder, got, tt.inOrder)
+		}
+	}
+}
