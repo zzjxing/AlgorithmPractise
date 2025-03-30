@@ -7,3 +7,14 @@ func Abs[T int | int8 | int16 | int32 | int64 | float32 | float64](x T) T {
 	}
 	return x
 }
+
+// ReverseSlice 反转切片并返回
+func ReverseSlice[T any](slice []T) []T {
+	left, right := 0, len(slice)-1
+	for left < right {
+		slice[left], slice[right] = slice[right], slice[left]
+		left++
+		right--
+	}
+	return slice
+}
