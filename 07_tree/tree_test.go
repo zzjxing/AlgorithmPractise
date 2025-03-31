@@ -181,3 +181,38 @@ func TestBuildTreeFromInPreOrder(t *testing.T) {
 		}
 	}
 }
+
+func TestSumNumbers(t *testing.T) {
+	tests := []struct {
+		data     []int
+		expected int
+	}{
+		//    1
+		//   / \
+		//  2   3
+		// 路径 12 + 13 = 25
+		{[]int{1, 2, 3}, 25},
+
+		//    4
+		//   / \
+		//  9   0
+		// /
+		//5
+		// 路径：495 + 40 = 535
+		{[]int{4, 9, 0, 5, -1}, 535},
+
+		// 空树
+		{[]int{}, 0},
+
+		// 单节点
+		{[]int{7}, 7},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		got := SumNumbers(root)
+		if got != tt.expected {
+			t.Errorf("SumNumbers(%v) = %d; want %d", tt.data, got, tt.expected)
+		}
+	}
+}
