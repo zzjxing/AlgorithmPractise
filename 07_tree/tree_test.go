@@ -498,3 +498,46 @@ func TestPathSum(t *testing.T) {
 		}
 	}
 }
+
+func TestIsBST(t *testing.T) {
+	tests := []struct {
+		data     []int
+		expected bool
+	}{
+		// 空树
+		{[]int{}, true},
+
+		// 单节点
+		{[]int{1}, true},
+
+		// 有效 BST
+		//      2
+		//     / \
+		//    1   3
+		{[]int{2, 1, 3}, true},
+
+		// 非 BST：右子树节点小于根
+		//      5
+		//     / \
+		//    1   4
+		//       / \
+		//      3   6
+		{[]int{5, 1, 4, -1, -1, 3, 6}, false},
+
+		// 有效 BST（多层）
+		//        10
+		//       /  \
+		//      5   15
+		//         /  \
+		//        11  20
+		{[]int{10, 5, 15, -1, -1, 11, 20}, true},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		got := IsBST(root)
+		if got != tt.expected {
+			t.Errorf("IsBST(%v) = %v; want %v", tt.data, got, tt.expected)
+		}
+	}
+}
