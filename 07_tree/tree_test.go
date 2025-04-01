@@ -3,6 +3,7 @@ package tree
 import (
 	"AlgorithmPractise/common"
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -431,6 +432,69 @@ func TestWidthOfBT(t *testing.T) {
 		got := WidthOfBT(root)
 		if got != tt.expected {
 			t.Errorf("WidthOfBT(%v) = %d; want %d", tt.data, got, tt.expected)
+		}
+	}
+}
+
+func sort2D(nums [][]int) {
+	sort.Slice(nums, func(i, j int) bool {
+		for k := 0; k < len(nums[i]) && k < len(nums[j]); k++ {
+			if nums[i][k] != nums[j][k] {
+				return nums[i][k] < nums[j][k]
+			}
+		}
+		return len(nums[i]) < len(nums[j])
+	})
+}
+
+func TestPathSum(t *testing.T) {
+	tests := []struct {
+		data     []int
+		target   int
+		expected [][]int
+	}{
+		// 树结构：
+		//     5
+		//    / \
+		//   4   8
+		//  /   / \
+		// 11  13  4
+		// / \      \
+		//7  2       1
+		//
+		// target = 22
+		// 路径：[5,4,11,2] 和 [5,8,4,5]
+		{[]int{5, 4, 8, 11, -1, 13, 4, 7, 2, -1, -1, -1, 1}, 22, [][]int{
+			{5, 4, 11, 2},
+		}},
+
+		// 空树
+		{[]int{}, 0, nil},
+
+		// 单节点等于目标
+		{[]int{1}, 1, [][]int{{1}}},
+
+		// 单节点不等于目标
+		{[]int{1}, 2, nil},
+
+		// 多路径匹配
+		//       1
+		//      / \
+		//     2   3
+		// target = 3
+		{[]int{1, 2, 3}, 3, [][]int{{1, 2}}},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		got := PathSum(root, tt.target)
+
+		// 排序结果，防止顺序导致对比失败
+		sort2D(got)
+		sort2D(tt.expected)
+
+		if !reflect.DeepEqual(got, tt.expected) {
+			t.Errorf("PathSum(%v, %d) = %v; want %v", tt.data, tt.target, got, tt.expected)
 		}
 	}
 }
