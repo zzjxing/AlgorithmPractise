@@ -384,3 +384,53 @@ func TestDiameterOfBT(t *testing.T) {
 		}
 	}
 }
+
+func TestWidthOfBT(t *testing.T) {
+	tests := []struct {
+		data     []int
+		expected int
+	}{
+		// 空树
+		{[]int{}, 0},
+
+		// 单节点
+		{[]int{1}, 1},
+
+		//        1
+		//       / \
+		//      3   2
+		//     /     \
+		//    5       9
+		//   /         \
+		//  6           7
+		// 最大宽度是 8：第4层从 index=0 的 6 到 index=7 的 7
+		{[]int{1, 3, 2, 5, -1, -1, 9, 6, -1, -1, 7}, 8},
+
+		// 完全二叉树：最大宽度 = 最后一层节点数 = 4
+		//       1
+		//     /   \
+		//    2     3
+		//   / \   / \
+		//  4  5  6   7
+		{[]int{1, 2, 3, 4, 5, 6, 7}, 4},
+
+		// 非完全树，缺右节点：最大宽度 = 2
+		{[]int{1, 2, -1, 4, -1}, 1},
+
+		// 两层中间空节点拉长宽度：最大宽度 = 4
+		//     1
+		//    / \
+		//   3   2
+		//  /     \
+		// 5       9
+		{[]int{1, 3, 2, 5, -1, -1, 9}, 4},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		got := WidthOfBT(root)
+		if got != tt.expected {
+			t.Errorf("WidthOfBT(%v) = %d; want %d", tt.data, got, tt.expected)
+		}
+	}
+}
