@@ -335,3 +335,52 @@ func TestIsBalanced(t *testing.T) {
 		}
 	}
 }
+
+func TestDiameterOfBT(t *testing.T) {
+	tests := []struct {
+		data     []int
+		expected int
+	}{
+		// 空树
+		{[]int{}, 0},
+
+		// 单节点
+		{[]int{1}, 0},
+
+		//     1
+		//    / \
+		//   2   3
+		//  / \
+		// 4   5
+		// 最长路径：4 -> 2 -> 5，长度为 2（边数）
+		// 或者 4 -> 2 -> 1 -> 3，长度为 3（边数）
+		{[]int{1, 2, 3, 4, 5}, 3},
+
+		//     1
+		//    /
+		//   2
+		//  /
+		// 3
+		// 最长路径：3->2->1，长度 2
+		{[]int{1, 2, -1, 3}, 2},
+
+		// 平衡树
+		//        1
+		//      /   \
+		//     2     3
+		//    / \     \
+		//   4   5     6
+		//  /
+		// 7
+		// 最长路径：7->4->2->1->3->6，长度为 5
+		{[]int{1, 2, 3, 4, 5, -1, 6, 7}, 5},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		got := DiameterOfBT(root)
+		if got != tt.expected {
+			t.Errorf("DiameterOfBT(%v) = %d; want %d", tt.data, got, tt.expected)
+		}
+	}
+}
