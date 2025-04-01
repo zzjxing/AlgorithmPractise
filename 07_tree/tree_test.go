@@ -295,3 +295,43 @@ func TestMaxDepth(t *testing.T) {
 		}
 	}
 }
+
+func TestIsBalanced(t *testing.T) {
+	tests := []struct {
+		data     []int
+		expected bool
+	}{
+		// 空树
+		{[]int{}, true},
+
+		// 单节点
+		{[]int{1}, true},
+
+		// 完全平衡树
+		//       1
+		//     /   \
+		//    2     2
+		//   / \   / \
+		//  3  4  4   3
+		{[]int{1, 2, 2, 3, 4, 4, 3}, true},
+
+		// 非平衡树
+		//     1
+		//    /
+		//   2
+		//  /
+		// 3
+		{[]int{1, 2, -1, 3}, false},
+
+		// 深度差刚好为1，仍平衡
+		{[]int{1, 2, 2, 3, -1, -1, 3}, true},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		got := IsBalanced(root)
+		if got != tt.expected {
+			t.Errorf("IsBalanced(%v) = %v; want %v", tt.data, got, tt.expected)
+		}
+	}
+}
