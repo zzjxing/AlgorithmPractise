@@ -216,3 +216,43 @@ func TestSumNumbers(t *testing.T) {
 		}
 	}
 }
+
+func TestIsSymmetric(t *testing.T) {
+	tests := []struct {
+		data     []int
+		expected bool
+	}{
+		// 对称的树：
+		//     1
+		//   /   \
+		//  2     2
+		// / \   / \
+		//3  4  4   3
+		{[]int{1, 2, 2, 3, 4, 4, 3}, true},
+
+		// 非对称的树：
+		//     1
+		//   /   \
+		//  2     2
+		//   \     \
+		//   3      3
+		{[]int{1, 2, 2, -1, 3, -1, 3}, false},
+
+		// 空树
+		{[]int{}, true},
+
+		// 单节点
+		{[]int{1}, true},
+
+		// 不对称
+		{[]int{1, 2, 2, -1, 3, -1, -1}, false},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		got := IsSymmetric(root)
+		if got != tt.expected {
+			t.Errorf("IsSymmetric(%v) = %v; want %v", tt.data, got, tt.expected)
+		}
+	}
+}
