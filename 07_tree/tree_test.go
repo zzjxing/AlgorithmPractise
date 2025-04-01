@@ -256,3 +256,42 @@ func TestIsSymmetric(t *testing.T) {
 		}
 	}
 }
+
+func TestMaxDepth(t *testing.T) {
+	tests := []struct {
+		data     []int
+		expected int
+	}{
+		// 空树
+		{[]int{}, 0},
+
+		// 单节点
+		{[]int{1}, 1},
+
+		//     1
+		//    / \
+		//   2   3
+		//  /
+		// 4
+		// 深度 = 3
+		{[]int{1, 2, 3, 4}, 3},
+
+		//     1
+		//    /
+		//   2
+		//  /
+		// 3
+		///
+		//4
+		// 深度 = 4
+		{[]int{1, 2, -1, 3, -1, 4}, 4},
+	}
+
+	for _, tt := range tests {
+		root := common.BuildTree(tt.data)
+		got := MaxDepth(root)
+		if got != tt.expected {
+			t.Errorf("MaxDepth(%v) = %d; want %d", tt.data, got, tt.expected)
+		}
+	}
+}
